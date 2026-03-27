@@ -63,6 +63,7 @@ Read the appropriate reference document based on the user's request:
 | Search | [reference/search.md](reference/search.md) | `scripts/search.sh` | Global, project, group search |
 | Wikis | [reference/wikis.md](reference/wikis.md) | `scripts/wikis.sh` | Wiki page operations |
 | Snippets | [reference/snippets.md](reference/snippets.md) | `scripts/snippets.sh` | Snippet operations (project & personal) |
+| **Markdown** | [reference/gitlab-flavored-markdown.md](reference/gitlab-flavored-markdown.md) | — | **GLFM syntax for all text fields** |
 
 ## Instructions
 
@@ -71,6 +72,7 @@ Read the appropriate reference document based on the user's request:
 3. **Source `scripts/common.sh`** first, then the category-specific script
 4. **Call the appropriate function** with required parameters
 5. **Parse the JSON response** using `jq` — never use `grep`/`sed` on JSON
+6. **Use GitLab Flavored Markdown (GLFM)** for all `description` and `body` fields — refer to [reference/gitlab-flavored-markdown.md](reference/gitlab-flavored-markdown.md) for syntax
 
 ### Common Patterns
 

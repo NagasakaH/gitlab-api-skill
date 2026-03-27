@@ -296,3 +296,11 @@ These parameters are shared across list endpoints:
 | `assignee_id` | int    | Filter by assignee user ID; `None` or `Any`                       |
 | `per_page`    | int    | Results per page (max: 100)                                       |
 | `page`        | int    | Page number for pagination                                        |
+
+---
+
+## Markdown Formatting
+
+All `description` and `body` fields accept **GitLab Flavored Markdown (GLFM)**. Use GLFM formatting for rich content such as task lists, tables, code blocks, inline diffs, and GitLab-specific references (e.g., `#123` for issues, `!456` for merge requests).
+
+See [GitLab Flavored Markdown Reference](gitlab-flavored-markdown.md) for the full syntax guide.

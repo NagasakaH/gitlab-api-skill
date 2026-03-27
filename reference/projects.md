@@ -512,3 +512,11 @@ These parameters are supported across most list endpoints:
 - Rate limits apply. Default: 2000 requests per minute for authenticated users.
 - Pagination headers (`X-Total`, `X-Total-Pages`, `X-Per-Page`, `X-Page`, `X-Next-Page`, `X-Prev-Page`) are included in list responses.
 - See the [official GitLab documentation](https://docs.gitlab.com/ee/api/projects.html) for the complete API reference.
+
+---
+
+## Markdown Formatting
+
+All `description` fields accept **GitLab Flavored Markdown (GLFM)**. Use GLFM formatting for rich content such as task lists, tables, code blocks, and GitLab-specific references.
+
+See [GitLab Flavored Markdown Reference](gitlab-flavored-markdown.md) for the full syntax guide.

@@ -324,3 +324,11 @@ These query parameters are shared across most list endpoints:
 | `403` | Forbidden |
 | `404` | Not found |
 | `409` | Conflict (e.g., duplicate issue link) |
+
+---
+
+## Markdown Formatting
+
+All `description` and `body` fields accept **GitLab Flavored Markdown (GLFM)**. Use GLFM formatting for rich content such as task lists, tables, code blocks, inline diffs, and GitLab-specific references.
+
+See [GitLab Flavored Markdown Reference](gitlab-flavored-markdown.md) for the full syntax guide.
