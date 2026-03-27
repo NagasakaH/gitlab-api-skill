@@ -335,6 +335,56 @@ DELETE /projects/:id/hooks/:hook_id
 
 ---
 
+## Upload a File to a Project
+
+```
+POST /projects/:id/uploads
+```
+
+Uploads a file to the specified project. The response contains a Markdown-formatted link that can be used in issue descriptions, merge request descriptions, comments (notes), and any other Markdown field.
+
+This endpoint uses **multipart form data** (not JSON).
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | integer or string | yes | Project ID or URL-encoded path |
+| `file` | file | yes | The file to upload (multipart form field) |
+
+### Response
+
+```json
+{
+  "id": 968485269,
+  "alt": "my-image",
+  "url": "/uploads/abc123def456/my-image.png",
+  "full_path": "/-/project/12345/uploads/abc123def456/my-image.png",
+  "markdown": "![my-image](/uploads/abc123def456/my-image.png)"
+}
+```
+
+### Usage Pattern: Attaching Files to Issues or Merge Requests
+
+To attach an image or file to an issue or merge request description:
+
+1. **Upload the file** to the project using this endpoint
+2. **Extract the `markdown` field** from the response
+3. **Include the markdown** in the `description` field when creating/editing an issue or merge request
+
+```bash
+# Step 1: Upload file
+UPLOAD_RESULT=$(gitlab_upload_project_file "my-group/my-project" "/path/to/screenshot.png")
+
+# Step 2: Extract markdown link
+IMAGE_MD=$(echo "$UPLOAD_RESULT" | jq -r '.markdown')
+
+# Step 3: Use in issue or MR description
+gitlab_create_issue "my-group/my-project" "Bug report" "Found a bug:\n\n${IMAGE_MD}"
+```
+
+> **Note:** Uploaded files are scoped to the project. The returned relative URL (`/uploads/...`) is resolved by GitLab when rendered in Markdown.
+
+---
+
 ## Common Query Parameters
 
 These parameters are supported across most list endpoints:

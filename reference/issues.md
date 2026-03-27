@@ -258,6 +258,42 @@ POST /projects/:id/milestones
 
 ---
 
+## Attaching Files to Issues
+
+To embed images or other files in an issue description or comment, first upload the file to the project, then include the returned Markdown link in the `description` or note `body`.
+
+### Workflow
+
+1. Upload the file via `POST /projects/:id/uploads` (see [Projects API — Upload a File](projects.md#upload-a-file-to-a-project))
+2. Extract the `markdown` field from the response (e.g., `![screenshot](/uploads/abc123/screenshot.png)`)
+3. Include the markdown string in the `description` when creating/editing an issue, or in the `body` when creating a note
+
+### Example
+
+```bash
+source scripts/common.sh
+source scripts/projects.sh
+source scripts/issues.sh
+
+PROJECT="my-group/my-project"
+
+# Upload the file
+UPLOAD=$(gitlab_upload_project_file "$PROJECT" "/path/to/screenshot.png")
+IMAGE_MD=$(echo "$UPLOAD" | jq -r '.markdown')
+
+# Create issue with embedded image
+DESCRIPTION=$(printf "## Bug Report\n\nSee screenshot below:\n\n%s" "$IMAGE_MD")
+gitlab_create_issue "$PROJECT" "Visual glitch on dashboard" "$DESCRIPTION"
+
+# Or add image as a comment on an existing issue
+NOTE_BODY=$(printf "Adding screenshot:\n\n%s" "$IMAGE_MD")
+gitlab_create_issue_note "$PROJECT" 42 "$NOTE_BODY"
+```
+
+> **Tip:** Multiple files can be uploaded and embedded. Each upload returns its own Markdown link.
+
+---
+
 ## Common Parameters
 
 These query parameters are shared across most list endpoints:

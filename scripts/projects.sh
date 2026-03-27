@@ -246,3 +246,21 @@ gitlab_delete_project_hook() {
 
   gitlab_api DELETE "/projects/${encoded_id}/hooks/${hook_id}"
 }
+
+# ---------------------------------------------------------------------------
+# Upload a file to a project.
+# The response includes a "markdown" field that can be embedded in issue
+# descriptions, merge request descriptions, or comments.
+# Usage: gitlab_upload_project_file <project_id> <file_path>
+#   $1 - project_id: numeric ID or "namespace/project" path (required)
+#   $2 - file_path: local path to the file to upload (required)
+# Returns JSON with: alt, url, full_path, markdown
+# ---------------------------------------------------------------------------
+gitlab_upload_project_file() {
+  local project_id="${1:?project_id is required}"
+  local file_path="${2:?file_path is required}"
+  local encoded_id
+  encoded_id="$(urlencode "$project_id")"
+
+  gitlab_upload "/projects/${encoded_id}/uploads" "$file_path" "file"
+}
